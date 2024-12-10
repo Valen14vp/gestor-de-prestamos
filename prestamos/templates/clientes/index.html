@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de Clientes  {% endblock %}
+
+{% block contenido %} 
+
+<div class="card">
+    <div class="card-header">Listar Clientes</div>
+    <div class="card-body">
+        <h4 class="card-title">Clientes</h4>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Direccion</th>
+                        <th scope="col">Identificacion</th>
+                        <th scope="col">Calificacion</th>
+                        <th scope="col">Fecha registro</th>
+                        <th scope="col">Activo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td>1</td>
+                        <td>Valentin</td>
+                        <td>valen125125@gmail.com</td>
+                        <td>11 12345678</td>
+                        <td>casa 1234</td>
+                        <td>12345678</td>
+                        <td>5</td>
+                        <td>10/12/24</td>
+                        <td>si</td>
+                        <td>Editar / Borrar</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="card-footer text-muted">Footer</div>
+</div>
+
+ 
+{% endblock %}

@@ -6,3 +6,6 @@ def hello(request):
 
 def about(request):
     return HttpResponse("About")
+
+def login(request):
+    return render(request, 'paginas/login.html')

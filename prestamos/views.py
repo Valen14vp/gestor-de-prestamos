@@ -11,3 +11,6 @@ def login(request):
     return render(request, 'paginas/login.html')
 def clientes(request):
     return render(request, 'clientes/index.html')
+
+def crear_clientes(request):
+    return render(request, 'clientes/crear.html')

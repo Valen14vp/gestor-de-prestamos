@@ -7,5 +7,5 @@ from .models import Clientes
 admin.site.register(Clientes)
 from .models import Prestamos
 admin.site.register(Prestamos)
-from .models import Recibos_prestamos
-admin.site.register(Recibos_prestamos)
+from .models import Recibos_Prestamos
+admin.site.register(Recibos_Prestamos)

@@ -4,8 +4,6 @@ from django.http import HttpResponse
 def inicio(request):
     return render(request, 'paginas/inicio.html')
 
-def about(request):
-    return HttpResponse("About")
 
 def login(request):
     return render(request, 'paginas/login.html')

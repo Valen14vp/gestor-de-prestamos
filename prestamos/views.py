@@ -14,3 +14,6 @@ def clientes(request):
 
 def crear_clientes(request):
     return render(request, 'clientes/crear.html')
+
+def editar_clientes(request):
+    return render(request, 'clientes/editar.html')

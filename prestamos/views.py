@@ -9,9 +9,21 @@ def inicio(request):
 
 def login(request):
     return render(request, 'paginas/login.html')
+
+
 def clientes(request):
-    clientes = Clientes.objects.all()
-    return render(request, 'clientes/index.html', {'clientes': clientes})
+    filtro = request.GET.get('filtro', 'todos') 
+    if filtro == 'activos':
+        clientes = Clientes.objects.filter(activo=True)
+    elif filtro == 'inactivos':
+        clientes = Clientes.objects.filter(activo=False)
+    else:
+        clientes = Clientes.objects.all()
+
+    return render(request, 'clientes/index.html', {'clientes': clientes, 'filtro_actual': filtro})
+
+
+
 
 def crear_clientes(request):
     formulario = ClientesForm(request.POST or None, request.FILES or None)
@@ -20,8 +32,13 @@ def crear_clientes(request):
         return  redirect('clientes')
     return render(request, 'clientes/crear.html', {'formulario': formulario})
 
-def editar_clientes(request):
-    return render(request, 'clientes/editar.html')
+def editar_clientes(request, id):
+    cliente = Clientes.objects.get(id=id)
+    formulario = ClientesForm(request.POST or None, request.FILES or None, instance=cliente)
+    if formulario.is_valid() and request.POST:
+        formulario.save()
+        return redirect('clientes')
+    return render(request, 'clientes/editar.html', {'formulario': formulario})
 
 
 

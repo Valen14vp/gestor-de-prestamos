@@ -18,7 +18,7 @@ class Usuarios(models.Model):
 
 class Clientes(models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100, null=False, blank=False)
+    nombre = models.CharField(max_length=100, null=False, blank=False, default="Nombre Apellido")
     email = models.CharField(max_length=100, null=False, blank=False, default="example@email.com")
     telefono = models.CharField(max_length=25, null=False, blank=False,default="+54 11 1234-5678")
     direccion = models.CharField(max_length=255, null=False, blank=False,default="direccion 12345")

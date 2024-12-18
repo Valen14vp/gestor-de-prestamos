@@ -1,83 +1,88 @@
 {% extends "base.html" %}
 
-{% block titulo %} Lista de Clientes  {% endblock %}
+{% block titulo %} Lista de Clientes {% endblock %}
 
-{% block contenido %} 
+{% block contenido %}
 
 <div class="card">
     <div class="card-header">
         <a
-            name=""
-            id=""
             class="btn btn-primary"
             href="{% url 'crear_clientes' %}"
             role="button"
             >Agregar Nuevo Cliente</a
         >
-        
     </div>
     <div class="card-body">
         <h4 class="card-title">Clientes</h4>
-        <div
-            class="table-responsive"
-        >
-            <table
-                class="table table-primary"
-            >
+        
+        <!-- Botones de Filtro -->
+        <div class="btn-group mb-3" role="group">
+            <a 
+                href="?filtro=activos" 
+                class="btn btn-primary {% if filtro_actual == 'activos' %}active{% endif %}">
+                Activos
+            </a>
+            <a 
+                href="?filtro=inactivos" 
+                class="btn btn-primary {% if filtro_actual == 'inactivos' %}active{% endif %}">
+                Inactivos
+            </a>
+            <a 
+                href="?filtro=todos" 
+                class="btn btn-primary {% if filtro_actual == 'todos' %}active{% endif %}">
+                Todos
+            </a>
+        </div>
+
+        <!-- Tabla de Clientes -->
+        <div class="table-responsive">
+            <table class="table table-primary">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col">Identificacion</th>
-                        <th scope="col">Calificacion</th>
-                        <th scope="col">Fecha registro</th>
-                        <th scope="col">Accion</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Calificación</th>
+                        <th scope="col">Fecha Registro</th>
+                        <th scope="col">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-
                     {% for cliente in clientes %}
-                        {% if cliente.activo%}
-
-                            <tr class="">
-                                <td>{{cliente.id}}</td>
-                                <td>{{cliente.nombre}}</td>
-                                <td>{{cliente.email}}</td>
-                                <td>{{cliente.telefono}}</td>
-                                <td>{{cliente.direccion}}</td>
-                                <td>{{cliente.identificacion}}</td>
-                                <td>{{cliente.calificacion}}</td>
-                                <td>{{cliente.fecha_registro}}</td>
-                                <td> <a
-                                    name=""
-                                    id=""
-                                    class="btn btn-info"
-                                    href="{% url 'editar_clientes' %}"
-                                    role="button"
-                                    >Editar</a
-                                >
-                                | <a
-                                    name=""
-                                    id=""
-                                    class="btn btn-danger"
-                                    href="{% url 'eliminar_clientes' cliente.id %}"
-                                    role="button"
-                                    >Borrar</a
-                                >
-                                </td>
-                            </tr>
-                        {% endif %}
+                    <tr>
+                        <td>{{ cliente.id }}</td>
+                        <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.telefono }}</td>
+                        <td>{{ cliente.direccion }}</td>
+                        <td>{{ cliente.identificacion }}</td>
+                        <td>{{ cliente.calificacion }}</td>
+                        <td>{{ cliente.fecha_registro }}</td>
+                        <td>
+                            <a 
+                                class="btn btn-info" 
+                                href="{% url 'editar_clientes' cliente.id %}" 
+                                role="button">
+                                Editar
+                            </a>
+                            |
+                            <a 
+                                class="btn btn-danger" 
+                                href="{% url 'eliminar_clientes' cliente.id %}" 
+                                role="button">
+                                Borrar
+                            </a>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        
     </div>
-    
 </div>
 
- 
 {% endblock %}

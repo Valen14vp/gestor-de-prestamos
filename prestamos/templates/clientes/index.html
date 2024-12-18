@@ -10,7 +10,7 @@
             name=""
             id=""
             class="btn btn-primary"
-            href="http://127.0.0.1:8000/clientes/crear"
+            href="{% url 'crear_clientes' %}"
             role="button"
             >Agregar Nuevo Cliente</a
         >
@@ -38,34 +38,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="">
-                        <td>1</td>
-                        <td>Valentin</td>
-                        <td>valen125125@gmail.com</td>
-                        <td>11 12345678</td>
-                        <td>casa 1234</td>
-                        <td>12345678</td>
-                        <td>5</td>
-                        <td>10/12/24</td>
-                        <td> <a
-                            name=""
-                            id=""
-                            class="btn btn-info"
-                            href="http://127.0.0.1:8000/clientes/editar"
-                            role="button"
-                            >Editar</a
-                        >
-                         | <a
-                            name=""
-                            id=""
-                            class="btn btn-danger"
-                            href="#"
-                            role="button"
-                            >Borrar</a
-                         >
-                         </td>
-                    </tr>
-                    
+
+                    {% for cliente in clientes %}
+                        {% if cliente.activo%}
+
+                            <tr class="">
+                                <td>{{cliente.id}}</td>
+                                <td>{{cliente.nombre}}</td>
+                                <td>{{cliente.email}}</td>
+                                <td>{{cliente.telefono}}</td>
+                                <td>{{cliente.direccion}}</td>
+                                <td>{{cliente.identificacion}}</td>
+                                <td>{{cliente.calificacion}}</td>
+                                <td>{{cliente.fecha_registro}}</td>
+                                <td> <a
+                                    name=""
+                                    id=""
+                                    class="btn btn-info"
+                                    href="{% url 'editar_clientes' %}"
+                                    role="button"
+                                    >Editar</a
+                                >
+                                | <a
+                                    name=""
+                                    id=""
+                                    class="btn btn-danger"
+                                    href="{% url 'eliminar_clientes' cliente.id %}"
+                                    role="button"
+                                    >Borrar</a
+                                >
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

@@ -20,9 +20,9 @@ class Clientes(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     email = models.CharField(max_length=100, null=False, blank=False, default="example@email.com")
-    telefono = models.CharField(max_length=25, null=True, blank=True)
-    direccion = models.CharField(max_length=255, null=True, blank=True)
-    identificacion = models.CharField(max_length=45, null=True, blank=True)
+    telefono = models.CharField(max_length=25, null=False, blank=False,default="+54 11 1234-5678")
+    direccion = models.CharField(max_length=255, null=False, blank=False,default="direccion 12345")
+    identificacion = models.CharField(max_length=45, null=False, blank=False,default="123456789")
     calificacion = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     activo = models.BooleanField(default=True)
@@ -79,4 +79,11 @@ class Recibos_Prestamos(models.Model):
         db_table = 'recibos'
         managed = True
     def __str__(self):
-        return f"Recibo ID: {self.id} - C Nombre: {self.prestamo.cliente.nombre} - Monto: {self.prestamo.monto}"
+        return f"Recibo ID: {self.id} - C Nombre: {self.prestamo.cliente.nombre}"
+    def delete(self, using=None, keep_parents=False):
+        self.imagen.storage.delete(self.imagen.name)
+        super().delete()
+    def clean(self):
+        if not self.imagen:
+            raise ValidationError("La imagen no puede estar vacía.")
+        super().clean()

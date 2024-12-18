@@ -1,62 +1,29 @@
 <form enctype="multipart/form-data" method="post">
-    <div class="mb-3">
-        <label for="" class="form-label">Nombre</label>
-        <input
-            type="text"
-            class="form-control"
-            name=""
-            id=""
-            aria-describedby="helpId"
-            placeholder="Nombre"
-        />
+
+    {% csrf_token %}
+    {% for campo in formulario %}
+        <div class="mb-3">
+            <label for="" class="form-label">{{campo.label}}</label>
+            <input
+                type="{{ campo.feild.widget.input_type }}"
+                class="form-control"
+                name="{{campo.name}}"
+                id=""
+                aria-describedby="helpId"
+                placeholder="{{campo.label}}"
+            />
+            
+        </div>
+        <div class="bs5-col-12 help-text">{{campo.errors}} </div>
+    {% endfor %}
+
+    <input
+        name=""
+        id=""
+        class="btn btn-primary"
+        type="submit"
+        value="Guardar informacion"
+    />
         
-    </div>
-    <div class="mb-3">
-        <label for="" class="form-label">Email</label>
-        <input
-            type="email"
-            class="form-control"
-            name=""
-            id=""
-            aria-describedby="helpId"
-            placeholder="Cliente@gmail.com"
-        />
-        
-    </div>
-    <div class="mb-3">
-        <label for="" class="form-label">Telefono</label>
-        <input
-            type="tel"
-            class="form-control"
-            name=""
-            id=""
-            aria-describedby="helpId"
-            placeholder="01 23456789"
-        />
-        
-    </div>
-    <div class="mb-3">
-        <label for="" class="form-label">Direccion</label>
-        <input
-            type="text"
-            class="form-control"
-            name=""
-            id=""
-            aria-describedby="helpId"
-            placeholder="Direccion 1234"
-        />
-        
-    </div>
-    <div class="mb-3">
-        <label for="" class="form-label">Identifiicacion</label>
-        <input
-            type="text"
-            class="form-control"
-            name=""
-            id=""
-            aria-describedby="helpId"
-            placeholder="12345678"
-        />
-        
-    </div>
+
 </form>   

@@ -3,7 +3,9 @@ from django.db import models
 # Create your models here.    
 class Usuarios(models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100, null=False, blank=False)
+    nombre_usuario = models.CharField(max_length=100, null=False, blank=False , default="Nombre de usuario")
+    nombre_empresa = models.CharField(max_length=100, null=False, blank=False, default="Nombre de la empresa")
+    telefono = models.CharField(max_length=25, null=False, blank=False, default="+54 11 1234-5678")
     email = models.CharField(max_length=100, null=False, blank=False)
     password = models.CharField(max_length=255, null=False, blank=False)
     fecha_registro = models.DateTimeField(auto_now_add=True)

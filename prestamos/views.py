@@ -2,9 +2,40 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Clientes
 from .forms import ClientesForm
+from .forms import NuevoUsuarioForm
+import string
+import random
+from django.core.mail import send_mail
 # Create your views here.
 def inicio(request):
     return render(request, 'paginas/inicio.html')
+
+def nuevo_usuario(request):
+    formulario= NuevoUsuarioForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        cliente = formulario.save(commit=False)
+
+            # Generar una contraseña aleatoria
+        longitud = 10
+        caracteres = string.ascii_letters + string.digits
+        contraseña_generada = ''.join(random.choice(caracteres) for _ in range(longitud))
+
+            # Guardar la contraseña generada en el cliente
+        cliente.password = contraseña_generada  # Suponiendo que tienes un campo `contraseña` en el modelo
+        cliente.save()
+        
+        send_mail(
+                'Bienvenido a Préstamo Click',
+                f'Hola {cliente.nombre}, tu registro fue exitoso. Tu contraseña es: {contraseña_generada}',
+                'prestamoclick25@gmail.com',  # Correo del remitente
+                [cliente.email],  # Correo del destinatario
+                fail_silently=False,
+            )
+        return redirect('inicio')
+    else:
+        formulario = NuevoUsuarioForm()
+    return render(request, 'paginas/nuevo_usuario.html', {'formulario': formulario})
+
 
 
 def login(request):

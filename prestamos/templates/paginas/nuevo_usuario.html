@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block titulo %} Nuevo Usuario {% endblock %}
+
+{% block contenido %} 
+
+<div class="card">
+    <div class="card-header">Registrase</div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del cliente</h4>
+
+        {% include "paginas/form_empezar.html"  %} 
+
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
+ 
+{% endblock %}

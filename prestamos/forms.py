@@ -8,3 +8,8 @@ class ClientesForm(forms.ModelForm):
     class Meta:
         model = Clientes
         fields = ['nombre', 'email', 'telefono', 'direccion', 'identificacion','activo']
+        
+class NuevoUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Clientes
+        fields = ['nombre', 'email', 'telefono', 'direccion', 'identificacion']

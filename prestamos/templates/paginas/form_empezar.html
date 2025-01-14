@@ -16,6 +16,8 @@
                 aria-describedby="helpId"
                 placeholder="{{campo.label}}"
                 value="{{ campo.value | default:''}}"
+                onfocus="if(this.value == '{{ campo.value }}') this.value = '';"
+                onblur="if(this.value == '') this.value = '{{ campo.value }}';"
             />
             
         </div>

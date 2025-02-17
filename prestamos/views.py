@@ -79,3 +79,6 @@ def eliminar_clientes(request, id):
     cliente.activo = 0                     
     cliente.save()                               
     return redirect('clientes') 
+
+def principal(request):
+    return render(request, 'usuarios/principal.html')

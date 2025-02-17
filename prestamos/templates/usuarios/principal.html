@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Login {% endblock %}
+
+{% block contenido %} 
+
+<div class="d-flex justify-content-center align-items-center min-vh-100" style="margin-top: -10vh;">
+    <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
+        <h1>prestamos activos</h1>
+        <p>monto</p>
+        <a
+            name=""
+            id=""
+            class="btn btn-primary"
+            href="#"
+            role="button"
+            >Pagar</a
+        >
+        <p> Fecha de vencimiento</p>
+        <a
+            name=""
+            id=""
+            class="btn btn-primary"
+            href="#"
+            role="button"
+            >Ayuda con mi pago</a
+        >
+        
+    </div> 
+
+
+    <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
+        <h1>Simulador de prestamos</h1>
+        <div class="input-group mt-4">
+            <div class="input-group-text bg-info">
+                <img src="{% static 'prestamos/imagenes/username-icon.svg' %}" 
+                     alt="username-icon" style="height: 1rem" />
+            </div>
+            <input class="form-control bg-light" type="text" placeholder="Monto" />
+        </div>
+
+
+       <div class="dropdown open" >
+        <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="triggerId"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+        >
+            Cuotas
+        </button>
+        <div class="dropdown-menu" aria-labelledby="triggerId">
+            <button class="dropdown-item" href="#">3 5% / $5000</button>
+            <button class="dropdown-item" href="#">6 5% / $5000</button>
+            <button class="dropdown-item" href="#">9 5% / $5000</button>
+            <button class="dropdown-item" href="#">12 5% / $5000</button>
+            <button class="dropdown-item" href="#">18 5% / $5000</button>
+            <button class="dropdown-item" href="#">24 5% / $5000</button>
+            <button class="dropdown-item" href="#">32 5% / $5000 </button>
+            <button class="dropdown-item" href="#">48 5% / $5000 </button>
+            <button class="dropdown-item" href="#">72 5% / $5000</button>
+            <button class="dropdown-item" href="#">96 5% / $5000</button>
+            
+        </div>
+       </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
+        <h1>Limite inicial</h1>
+        <p>Habilitar prestamos</p>
+        <p>Requisitos minímos: dni, domicilio, edad, cuil, cpa, contacto</p>
+    </div>
+
+    <div>
+        <a
+            name=""
+            id=""
+            class="btn btn-primary"
+            href="#"
+            role="button"
+            >Sacar prestamo</a
+        >
+        
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

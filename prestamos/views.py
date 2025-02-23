@@ -15,7 +15,7 @@ from django.contrib.auth.hashers import make_password
 
 
 
-# Create your views here.
+
 def inicio(request):
     return render(request, 'paginas/inicio.html')
 
@@ -30,7 +30,7 @@ def nuevo_usuario(request):
         contraseña_generada = ''.join(random.choice(caracteres) for _ in range(longitud))
 
             # Guardar la contraseña generada en el cliente
-        cliente.password = make_password(contraseña_generada)  # Suponiendo que tienes un campo `contraseña` en el modelo
+        cliente.password = make_password(contraseña_generada)  
         cliente.save()
         
         send_mail(
@@ -54,7 +54,7 @@ def login(request):
 
         try:
             cliente = Clientes.objects.get(email=email)
-            if check_password(password, cliente.password):  # Compara contraseña ingresada con la encriptada
+            if check_password(password, cliente.password):  
                 request.session["usuario_id"] = cliente.id
                 return redirect("principal")
             else:
@@ -103,17 +103,17 @@ def eliminar_clientes(request, id):
     return redirect('clientes') 
 
 def principal(request):
-    usuario_id = request.session.get("usuario_id")  # Obtener ID del usuario autenticado
+    usuario_id = request.session.get("usuario_id")  
     if not usuario_id:
-        return redirect("login")  # Si no hay usuario en sesión, redirige a login
+        return redirect("login")  
 
-    cliente = Clientes.objects.get(id=usuario_id)  # Obtener los datos del cliente autenticado
+    cliente = Clientes.objects.get(id=usuario_id)  
 
     return render(request, "usuarios/principal.html", {"cliente": cliente}) 
 
 
 def logout_usuario(request):
-    request.session.flush()  # Borra la sesión del usuario
+    request.session.flush() 
     return redirect("login")
 
 

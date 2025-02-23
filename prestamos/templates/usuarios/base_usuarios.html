@@ -42,7 +42,7 @@
 <body>
 
     <!-- Barra lateral -->
-    <div class="sidebar d-flex flex-column">
+    <div class="sidebar d-flex flex-column"> 
         <div class="text-center">
             <i class="bi bi-person-circle fs-1"></i>
             <h5 class="mt-2">{{ cliente.nombre }}</h5>
@@ -60,8 +60,7 @@
     <!-- Contenido principal con block contenido -->
     <div class="content">
         {% block contenido %} 
-        <h2>Bienvenido al panel de usuario</h2>
-        <p>Aquí irá el contenido dinámico de la aplicación.</p>
+
         {% endblock %}
     </div>
 

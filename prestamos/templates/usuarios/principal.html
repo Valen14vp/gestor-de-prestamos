@@ -7,88 +7,88 @@
 
 <div class="d-flex justify-content-center align-items-center min-vh-100" style="margin-top: -10vh;">
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
-        <h1>prestamos activos</h1>
-        <p>monto</p>
-        <a
-            name=""
-            id=""
-            class="btn btn-primary"
-            href="#"
-            role="button"
-            >Pagar</a
-        >
-        <p> Fecha de vencimiento</p>
-        <a
-            name=""
-            id=""
-            class="btn btn-primary"
-            href="#"
-            role="button"
-            >Ayuda con mi pago</a
-        >
-        
+        <h1>Prestamos Activos</h1>
+        <p>Monto</p>
+        <a class="btn btn-primary" href="#" role="button">Pagar</a>
+        <p>Fecha de Vencimiento</p>
+        <a class="btn btn-primary" href="#" role="button">Ayuda con mi pago</a>
     </div> 
 
-
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
-        <h1>Simulador de prestamos</h1>
+        <h1>Simulador de Préstamos</h1>
+
+        <!-- Input para ingresar el monto -->
         <div class="input-group mt-4">
             <div class="input-group-text bg-info">
                 <img src="{% static 'prestamos/imagenes/username-icon.svg' %}" 
                      alt="username-icon" style="height: 1rem" />
             </div>
-            <input class="form-control bg-light" type="text" placeholder="Monto" />
+            <input id="monto" class="form-control bg-light" type="number" placeholder="Monto" value="100000" />
         </div>
 
-
-       <div class="dropdown open" >
-        <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="triggerId"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-        >
-            Cuotas
-        </button>
-        <div class="dropdown-menu" aria-labelledby="triggerId">
-            <button class="dropdown-item" href="#">3 5% / $5000</button>
-            <button class="dropdown-item" href="#">6 5% / $5000</button>
-            <button class="dropdown-item" href="#">9 5% / $5000</button>
-            <button class="dropdown-item" href="#">12 5% / $5000</button>
-            <button class="dropdown-item" href="#">18 5% / $5000</button>
-            <button class="dropdown-item" href="#">24 5% / $5000</button>
-            <button class="dropdown-item" href="#">32 5% / $5000 </button>
-            <button class="dropdown-item" href="#">48 5% / $5000 </button>
-            <button class="dropdown-item" href="#">72 5% / $5000</button>
-            <button class="dropdown-item" href="#">96 5% / $5000</button>
-            
+        <!-- Dropdown de cuotas -->
+        <div class="dropdown open mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Cuotas
+            </button>
+            <div id="cuotas-dropdown" class="dropdown-menu" aria-labelledby="triggerId">
+                <!-- Opciones se llenarán dinámicamente con JavaScript -->
+            </div>
         </div>
-       </div>
     </div>
 
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
-        <h1>Limite inicial</h1>
-        <p>Habilitar prestamos</p>
-        <p>Requisitos minímos: dni, domicilio, edad, cuil, cpa, contacto</p>
+        <h1>Límite Inicial</h1>
+        <p>Habilitar préstamos</p>
+        <p>Requisitos mínimos: DNI, domicilio, edad, CUIL, CPA, contacto</p>
     </div>
 
     <div>
-        <a
-            name=""
-            id=""
-            class="btn btn-primary"
-            href="#"
-            role="button"
-            >Sacar prestamo</a
-        >
-        
+        <a class="btn btn-primary" href="#" role="button">Sacar préstamo</a>
     </div>
 </div>
 
+<!-- Script para calcular cuotas dinámicamente -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const montoInput = document.getElementById("monto");
+        const dropdownMenu = document.getElementById("cuotas-dropdown");
 
+        // Definir las cuotas y tasa de interés
+        const cuotasDisponibles = [3, 6, 9, 12, 18, 24, 32, 48, 72, 96];
+        const tasaAnual = 65.71; // TNA en porcentaje
 
+        // Convertir TNA a tasa mensual compuesta
+        const tasaMensual = Math.pow(1 + tasaAnual / 100, 1 / 12) - 1;
 
+        function calcularCuotaFrances(monto, tasa, meses) {
+            return (monto * tasa) / (1 - Math.pow(1 + tasa, -meses));
+        }
+
+        function actualizarDropdown() {
+            const monto = parseFloat(montoInput.value) || 0;
+            dropdownMenu.innerHTML = ""; // Limpiar opciones previas
+
+            cuotasDisponibles.forEach((meses) => {
+                const cuotaMensual = calcularCuotaFrances(monto, tasaMensual, meses);
+                const totalPagado = cuotaMensual * meses;
+                const interesTotal = ((totalPagado / monto) - 1) * 100;
+
+                // Crear opción de cuota con el formato adecuado
+                const option = document.createElement("button");
+                option.className = "dropdown-item";
+                option.textContent = `${meses} meses - $${cuotaMensual.toFixed(2)} (${interesTotal.toFixed(2)}% interés)`;
+                dropdownMenu.appendChild(option);
+            });
+        }
+
+        // Actualizar cuando cambia el monto
+        montoInput.addEventListener("input", actualizarDropdown);
+
+        // Cargar opciones al inicio
+        actualizarDropdown();
+    });
+</script>
 
 {% endblock %}

@@ -21,10 +21,10 @@ class Usuarios(models.Model):
 class Clientes(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, null=False, blank=False, default="Nombre Apellido")
-    email = models.CharField(max_length=100, null=False, blank=False, default="example@email.com")
+    email = models.CharField(max_length=100,unique=True, null=False, blank=False, default="example@email.com")
     telefono = models.CharField(max_length=25, null=False, blank=False,default="+54 11 1234-5678")
     direccion = models.CharField(max_length=255, null=False, blank=False,default="direccion 12345")
-    identificacion = models.CharField(max_length=45, null=False, blank=False,default="123456789")
+    identificacion = models.CharField(max_length=45,unique=True, null=False, blank=False,default="123456789")
     calificacion = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     activo = models.BooleanField(default=True)
@@ -39,6 +39,12 @@ class Clientes(models.Model):
     class Meta:
         db_table = 'clientes'
         managed = True    
+        
+    def save(self, *args, **kwargs):
+        # Encriptar contraseña solo si no está encriptada
+        if not self.password.startswith('pbkdf2_sha256$'):
+            self.password = make_password(self.password)
+        super(Clientes, self).save(*args, **kwargs)
     def __str__(self):
         fila= "Nombre: " + self.nombre + " - Email: " + self.email
         return fila

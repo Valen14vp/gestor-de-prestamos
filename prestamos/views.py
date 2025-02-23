@@ -6,6 +6,15 @@ from .forms import NuevoUsuarioForm
 import string
 import random
 from django.core.mail import send_mail
+from django.contrib.auth.hashers import check_password
+from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.hashers import make_password 
+
+
+
+
+
 # Create your views here.
 def inicio(request):
     return render(request, 'paginas/inicio.html')
@@ -21,7 +30,7 @@ def nuevo_usuario(request):
         contraseña_generada = ''.join(random.choice(caracteres) for _ in range(longitud))
 
             # Guardar la contraseña generada en el cliente
-        cliente.password = contraseña_generada  # Suponiendo que tienes un campo `contraseña` en el modelo
+        cliente.password = make_password(contraseña_generada)  # Suponiendo que tienes un campo `contraseña` en el modelo
         cliente.save()
         
         send_mail(
@@ -39,6 +48,19 @@ def nuevo_usuario(request):
 
 
 def login(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
+
+        try:
+            cliente = Clientes.objects.get(email=email)
+            if check_password(password, cliente.password):  # Compara contraseña ingresada con la encriptada
+                request.session["usuario_id"] = cliente.id
+                return redirect("principal")
+            else:
+                messages.error(request, "Contraseña incorrecta.")
+        except Clientes.DoesNotExist:
+            messages.error(request, "Usuario no encontrado.")
     return render(request, 'paginas/login.html')
 
 
@@ -81,4 +103,41 @@ def eliminar_clientes(request, id):
     return redirect('clientes') 
 
 def principal(request):
-    return render(request, 'usuarios/principal.html')
+    usuario_id = request.session.get("usuario_id")  # Obtener ID del usuario autenticado
+    if not usuario_id:
+        return redirect("login")  # Si no hay usuario en sesión, redirige a login
+
+    cliente = Clientes.objects.get(id=usuario_id)  # Obtener los datos del cliente autenticado
+
+    return render(request, "usuarios/principal.html", {"cliente": cliente}) 
+
+
+def logout_usuario(request):
+    request.session.flush()  # Borra la sesión del usuario
+    return redirect("login")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

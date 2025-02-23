@@ -1,0 +1,21 @@
+import os
+import django
+
+# Configurar Django para poder acceder a los modelos
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "prestamos.settings")  # Ajusta según tu estructura
+django.setup()
+
+from django.contrib.auth.hashers import make_password
+from prestamos.models import Clientes  # Asegúrate de que Cliente es el nombre correcto del modelo
+
+# Obtener todos los clientes
+clientes = Cliente.objects.all()
+
+for cliente in clientes:
+    # Si la contraseña no está encriptada, la encriptamos
+    if not cliente.password.startswith('pbkdf2_sha256$'):
+        cliente.password = make_password(cliente.password)
+        cliente.save()
+        print(f"Contraseña encriptada para {cliente.email}")
+
+print("✅ Contraseñas actualizadas correctamente.")

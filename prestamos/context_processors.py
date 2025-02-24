@@ -1,12 +1,12 @@
 from prestamos.models import Clientes
 
 def datos_usuario(request):
-    cliente_id = request.session.get("usuario_id")  # Aquí usas "cliente_id" en lugar de "clientes_id"
+    cliente_id = request.session.get("usuario_id") 
     
-    if cliente_id:  # Debe coincidir con el nombre de la variable
+    if cliente_id: 
         try:
             cliente = Clientes.objects.get(id=cliente_id)
-            return {"cliente": cliente}  # Agregar datos al contexto global
+            return {"cliente": cliente}  
         except Clientes.DoesNotExist:
             return {}
     

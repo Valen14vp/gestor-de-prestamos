@@ -1,19 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Clientes
-from .forms import ClientesForm
-from .forms import NuevoUsuarioForm
-import string
-import random
 from django.core.mail import send_mail
-from django.contrib.auth.hashers import check_password
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from django.contrib.auth.hashers import make_password 
-from .forms import SolicitarPrestamoForm
-
-
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password, make_password
+from .models import Clientes, Prestamos
+from .forms import ClientesForm, NuevoUsuarioForm, SolicitarPrestamoForm
+import string
+import random
 
 
 
@@ -49,21 +44,6 @@ def nuevo_usuario(request):
 
 
 
-def login(request):
-    if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
-
-        try:
-            cliente = Clientes.objects.get(email=email)
-            if check_password(password, cliente.password):  
-                request.session["usuario_id"] = cliente.id
-                return redirect("principal")
-            else:
-                messages.error(request, "Contraseña incorrecta.")
-        except Clientes.DoesNotExist:
-            messages.error(request, "Usuario no encontrado.")
-    return render(request, 'paginas/login.html')
 
 
 def clientes(request):
@@ -109,18 +89,60 @@ def eliminar_clientes(request, id):
 
 #usuarios
 def principal(request):
-    usuario_id = request.session.get("usuario_id")  
-    if not usuario_id:
-        return redirect("login")  
+    cliente_id = request.session.get("cliente_id") 
+    if not cliente_id:
+        return redirect("login") 
 
-    cliente = Clientes.objects.get(id=usuario_id)  
+    cliente = Clientes.objects.get(id=cliente_id)
+    return render(request, "usuarios/principal.html", {"cliente": cliente})
 
-    return render(request, "usuarios/principal.html", {"cliente": cliente}) 
+
+def login(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        try:
+            cliente = Clientes.objects.get(email=email)
+
+            if check_password(password, cliente.password):
+                request.session["cliente_id"] = cliente.id 
+                request.session.set_expiry(0) 
+                
+                return redirect("principal")
+
+            else:
+                messages.error(request, "Contraseña incorrecta.")
+
+        except Clientes.DoesNotExist:
+            messages.error(request, "Usuario no encontrado.")
+
+    return render(request, "paginas/login.html")
 
 
-def logout_usuario(request):
-    request.session.flush() 
-    return redirect("login")
+
+
+def solicitar_prestamo(request):
+    cliente_id = request.session.get("cliente_id")  
+    if not cliente_id:
+        return redirect("login") 
+
+    if request.method == "POST":
+        formulario = SolicitarPrestamoForm(request.POST, request.FILES) 
+        if formulario.is_valid():  
+            prestamo = formulario.save(commit=False)
+            prestamo.cliente = Clientes.objects.get(id=cliente_id)  
+            prestamo.save()  
+            return redirect("principal")  
+    else:
+        formulario = SolicitarPrestamoForm() 
+
+    cliente = Clientes.objects.get(id=cliente_id)
+    return render(request, "usuarios/solicitar_prestamo.html", {"formulario": formulario, "cliente": cliente}) 
+    
+
+
+
 
 
 
@@ -154,15 +176,10 @@ def estadisticas(request):
 
 
 
+def logout_usuario(request):
+    request.session.flush() 
+    return redirect("login")
 
-
-
-def solicitar_prestamo(request):
-    formulario = SolicitarPrestamoForm(request.POST or None, request.FILES or None)
-    if formulario.is_valid():
-        formulario.save()
-        return  redirect('principal')
-    return render(request, 'usuarios/solicitar_prestamo.html', {'formulario': formulario})
 
 
 

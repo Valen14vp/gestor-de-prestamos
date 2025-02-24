@@ -1,0 +1,28 @@
+<form enctype="multipart/form-data" method="post" class="p-4 border rounded shadow">
+    {% csrf_token %}
+
+    {% for campo in formulario %}
+        <div class="mb-3">
+            <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+
+            {% if campo.field.widget.input_type == 'file' and campo.value %}
+                <div class="mb-2">
+                    <img src="{{ MEDIA_URL }}{{ campo.value }}" alt="Archivo actual" class="img-thumbnail" width="150">
+                </div>
+            {% endif %}
+
+            {{ campo }}
+
+            {% if campo.errors %}
+                <div class="text-danger">
+                    {{ campo.errors|striptags }}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <div class="d-flex justify-content-between">
+        <input class="btn btn-primary" type="submit" value="Enviar solicitud">
+        <a class="btn btn-danger" href="{% url 'clientes' %}">Cancelar</a>
+    </div>
+</form>

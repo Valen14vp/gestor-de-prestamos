@@ -10,6 +10,8 @@ from django.contrib.auth.hashers import check_password
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.hashers import make_password 
+from .forms import SolicitarPrestamoForm
+
 
 
 
@@ -102,6 +104,10 @@ def eliminar_clientes(request, id):
     cliente.save()                               
     return redirect('clientes') 
 
+
+
+
+#usuarios
 def principal(request):
     usuario_id = request.session.get("usuario_id")  
     if not usuario_id:
@@ -119,14 +125,44 @@ def logout_usuario(request):
 
 
 
+def ajustes(request):
+    return render(request, 'usuarios/ajustes.html')
+
+
+
+
+def ayuda(request):
+    return render(request, 'usuarios/ayuda.html')
+
+
+
+
+def calendario(request):
+    return render(request, 'usuarios/calendario.html')
+
+
+
+
+def historial(request):
+    return render(request, 'usuarios/historial.html')
+
+
+
+
+def estadisticas(request):
+    return render(request, 'usuarios/estadisticas.html')
 
 
 
 
 
 
-
-
+def solicitar_prestamo(request):
+    formulario = SolicitarPrestamoForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        return  redirect('principal')
+    return render(request, 'usuarios/solicitar_prestamo.html', {'formulario': formulario})
 
 
 

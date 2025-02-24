@@ -7,16 +7,15 @@
 
 <div class="d-flex justify-content-center align-items-center min-vh-100" style="margin-top: -10vh;">
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
-        <h1>Prestamos Activos</h1>
+        <h1 class="text-info">Prestamos Activos</h1>
         <p>Monto</p>
         <a class="btn btn-primary" href="#" role="button">Pagar</a>
         <p>Fecha de Vencimiento</p>
         <a class="btn btn-primary" href="#" role="button">Ayuda con mi pago</a>
     </div> 
-
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
-        <h1>Simulador de Préstamos</h1>
-
+        <h1 class="text-info">Simulador de Préstamos</h1>
+    
         <!-- Input para ingresar el monto -->
         <div class="input-group mt-4">
             <div class="input-group-text bg-info">
@@ -39,13 +38,51 @@
     </div>
 
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
-        <h1>Límite Inicial</h1>
-        <p>Habilitar préstamos</p>
-        <p>Requisitos mínimos: DNI, domicilio, edad, CUIL, CPA, contacto</p>
+        <div class="text-info">
+            <h1>Caracteristicas del prestamo</h1>    
+        </div>
+        <div>
+            <h3>Monto minimo</h3>
+            <p>$100.000.</p>
+        </div>
+        <div>
+            <h3>Monto maximo</h3>
+            <p>$7.000.000.</p>
+        </div>
+        <div>
+            <h3>Moneda</h3>
+            <p>Pesos.</p>
+        </div>
+            <table class="table cfttna">
+                <thead>
+                <tr>
+                <th style="font-size:16px; white-space: normal !important;">T.N.A. Fija<span class="celeste superIndice">(1)</span></th>
+                <th style="font-size:16px; white-space: normal !important;">T.E.A. Fija<span class="celeste superIndice">(2)</span></th>
+                <th class="cfttitulo" style=" white-space: normal !important;">CFT TNA<span class="celeste superIndice">(3)</span></th>
+                <th class="cfttitulo" style=" white-space: normal !important;">CFT TEA<span class="celeste superIndice">(4)</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td style="font-size:16px; white-space: normal !important;">50,00%</td>
+                <td style="font-size:16px; white-space: normal !important;">64,81%</td>
+                <td class="cftnumero" style=" white-space: normal !important;">	58,50%</td>
+                <td class="cftnumero" style=" white-space: normal !important;">90,12%</td>
+                </tr>
+                
+                </tbody>
+                </table>
+    
+                <div class="legal" style="margin-top:10px; display: inline-block !important; font-size:14px;" bis_skin_checked="1">
+                    Calculado para $ 100.000 de préstamo a un plazo de 72 meses. <span class="celeste">(1)</span> Tasa Nominal Anual. <span class="celeste">(2)</span> Tasa Efectiva Anual. 
+                    <span class="celeste">(3)</span> Costo Financiero Total expresado en Tasa Nominal Anual. <span class="celeste">(4)</span> Costo Financiero Total expresado en Tasa Efectiva Anual.
+                    El cálculo de CFT incluye capital, interés e IVA sobre intereses. (No incluye impuestos de sellos provinciales ni el costo de mantenimiento mensual de paquete de servicios).
+                    </div>
+
     </div>
 
     <div>
-        <a class="btn btn-primary" href="#" role="button">Sacar préstamo</a>
+        <a class="btn btn-primary" href="{% url 'solicitar' %}" role="button">Solicitar préstamo</a>
     </div>
 </div>
 
@@ -57,7 +94,7 @@
 
         // Definir las cuotas y tasa de interés
         const cuotasDisponibles = [3, 6, 9, 12, 18, 24, 32, 48, 72, 96];
-        const tasaAnual = 65.71; // TNA en porcentaje
+        const tasaAnual = 50.00; // Nueva TNA en porcentaje
 
         // Convertir TNA a tasa mensual compuesta
         const tasaMensual = Math.pow(1 + tasaAnual / 100, 1 / 12) - 1;

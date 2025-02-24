@@ -56,6 +56,13 @@ class Prestamos(models.Model):
     plazo = models.IntegerField(null=False, blank=False)
     fecha_solicitud = models.DateTimeField(null=True, blank=True)
     estado = models.CharField(max_length=20, default="pendiente", null=False, blank=False)
+    ingresos_mensuales = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=False)
+    empleo_actual = models.CharField(max_length=100, null=True, blank=False)
+    imagen_recibo = models.ImageField(upload_to='imagenes/', null=True, blank=False)
+    imagen_dnifrente = models.ImageField(upload_to='imagenes/', null=True, blank=False)
+    imagen_dnireverso = models.ImageField(upload_to='imagenes/', null=True, blank=False)
+    terminos_y_condiciones = models.BooleanField(default=False)
+    fecha_de_aprobacion = models.DateTimeField(null=True, blank=True)
     cliente = models.ForeignKey(
         'Clientes', 
         on_delete=models.CASCADE, 
@@ -73,8 +80,8 @@ class Prestamos(models.Model):
 class Recibos_Prestamos(models.Model):
     id = models.AutoField(primary_key=True)
     tipo_recibo = models.CharField(max_length=50, null=False, blank=False)
-    imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
-    nombre_archivo = models.CharField(max_length=255, null=True, blank=True)
+    imagen = models.ImageField(upload_to='imagenes/', null=True, blank=False)
+    nombre_archivo = models.CharField(max_length=255, null=True, blank=False)
     fecha_subida = models.DateTimeField(auto_now_add=True)
     prestamo = models.ForeignKey(
         'Prestamos', 

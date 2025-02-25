@@ -3,7 +3,9 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'prestamos/css/estilos.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock %}
+
 {% block titulo %}Inicio{% endblock %}
 
 {% block contenido %} 
@@ -35,7 +37,6 @@
             <div class="cotizaciones">
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://es.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
                     {
                     "symbols": [
@@ -62,37 +63,112 @@
                 <div class="columna">
                     <div class="contacto-formal">
                         <a href="mailto:aaaaa@bbb.ccc" class="text-light">Correo electrónico</a> 
-                        <a href="tel:+123456789" class="text-light">Telefóno</a>
+                        <a href="tel:+123456789" class="text-light">Teléfono</a>
                         <a href="#" target="_blank" class="text-light">Sucursal</a>
                         <p>Centro de Atención al Cliente <br> <span id="numero-atenc">0800-222-1111</span></p>
                     </div>
                 </div>   
                 <div class="copy">
-                    <p>Copyright &copy; 2024 <a href="#" class="text-light">Terminos y condiciones</a> <a href="#" class="text-light">Version nocturna</a> <a href="#" class="text-light">Version inglés</a></p>
+                    <p>Copyright &copy; 2024 <a href="#" class="text-light">Términos y condiciones</a> <a href="#" class="text-light">Versión nocturna</a> <a href="#" class="text-light">Versión inglés</a></p>
                 </div>
             </div>
         </footer>
     </div>
 </div>
+
+<style>
+/* Estilos Responsivos */
+.grid-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.carrousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.grande {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 200%;
+}
+
+.grande img {
+    width: 50%;
+    object-fit: cover;
+}
+
+.relleno {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.productos img {
+    max-width: 100%;
+    height: auto;
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .grid-layout {
+        flex-direction: column;
+    }
+
+    .caja2, .caja3 {
+        width: 100%;
+    }
+
+    .grande {
+        width: 200%;
+    }
+
+    .productos img {
+        max-width: 80%;
+    }
+}
+</style>
+
 <script>
-    'use strict';
-const grande = document.querySelector('.grande');
-const puntos = document.querySelectorAll('.punto');
+'use strict';
+document.addEventListener("DOMContentLoaded", function () {
+    const grande = document.querySelector('.grande');
+    const puntos = document.querySelectorAll('.punto');
 
-puntos.forEach((punto, i) => {
-    punto.addEventListener('click', () => {
-        let posicion = i;
-        let operacion = posicion * -50;
-        grande.style.transform = `translateX(${operacion}%)`; 
+    let index = 0;
+    function cambiarImagen() {
+        index = (index + 1) % puntos.length;
+        let operacion = index * -50;
+        grande.style.transform = `translateX(${operacion}%)`;
 
-      
         puntos.forEach(p => p.classList.remove('activo'));
+        puntos[index].classList.add('activo');
+    }
 
-   
-        punto.classList.add('activo');
+    puntos.forEach((punto, i) => {
+        punto.addEventListener('click', () => {
+            index = i;
+            let operacion = index * -50;
+            grande.style.transform = `translateX(${operacion}%)`;
+
+            puntos.forEach(p => p.classList.remove('activo'));
+            punto.classList.add('activo');
+        });
     });
-});
 
+    setInterval(cambiarImagen, 5000);
+});
 </script>
- 
+
 {% endblock %}

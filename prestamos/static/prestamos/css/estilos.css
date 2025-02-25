@@ -272,10 +272,53 @@ list-style-type: none;
     display: flex; /* Usar Flexbox */
     flex-direction: row; /* Columna de elementos */
     align-items: center; /* Centrar elementos */
-    gap: 10px; /* Espacio entre elementos */
+    gap: 10px;
 }
 
 .icons a img{
     width: 2em;
     height: 2em;
+}
+@media (max-width: 768px) { 
+    .grid-layout {
+        grid-template-rows: auto auto auto;
+        min-height: 100vh;
+        padding: 10px;
+    }
+
+    .carrousel .grande {
+        flex-direction: column; 
+        width: 100%;
+        padding: 1em;
+    }
+
+    .carrousel .img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .relleno {
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
+
+    .productos img {
+        width: 90%; 
+        height: auto;
+    }
+
+    .contacto-formal {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menu-horizontal {
+        display: none;
+    }
+
+    .menu-vertical {
+        position: relative;
+        width: 100%;
+    }
 }

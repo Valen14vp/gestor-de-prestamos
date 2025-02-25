@@ -1,18 +1,27 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #430c87 0%, #3d1d95 35%, #00d4ff 100%);
+        }
+    </style>
+    {% endblock %}
 {% block titulo %} Nuevo Usuario {% endblock %}
 
 {% block contenido %} 
-
-<div class="card">
-    <div class="card-header">Registrase</div>
-    <div class="card-body">
-        <h4 class="card-title">Datos del cliente</h4>
-
-        {% include "paginas/form_empezar.html"  %} 
-
+<div class="container d-flex justify-content-center align-items-center min-vh-100" style="margin-top: -10vh;">
+    <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
+        <div class="card-header text-center fs-2">Registrase</div>
+        <div class="card-body">
+            <h4 class="card-title text-center">Datos del cliente</h4>
+            <div class="d-flex justify-content-center">
+                {% include "paginas/form_empezar.html"  %} 
+            </div>
+        </div>
+        <div class="card-footer text-muted text-center"></div>
     </div>
-    <div class="card-footer text-muted"></div>
 </div>
+
  
 {% endblock %}

@@ -1,0 +1,281 @@
+* {
+    color: #fff; /* Color de texto por defecto */
+    text-shadow: 1px 1px 2px black;
+    font-family: "Montserrat", sans-serif; /* Fuente Montserrat */
+    box-sizing: border-box; /* Para que padding y border no aumenten el tamaño del elemento */
+    margin: 0; /* Elimina márgenes por defecto */
+    padding: 0; /* Elimina padding por defecto */
+    
+}
+.container {max-width: 1920px;}
+img {
+    width: 90px; /* Ancho de las imágenes */
+    height: 90px; /* Alto de las imágenes */
+    border-radius: 15px;
+}
+
+body {
+    background-image: linear-gradient(90deg, #430c87 0%, #3d1d95 35%, #00d4ff 100%); /* Gradiente de fondo */
+}
+
+.grid-layout {
+    display: grid; /* Usar CSS Grid */
+    grid-template-areas: 
+        'header'
+        'main'
+        'footer'; /* Definir áreas de grid */
+    grid-template-rows: auto auto auto; /* Definir alturas de las filas */
+    height: 100vh; /* Altura del contenedor */
+    grid-gap: 10px; /* Espacio entre las áreas */
+}
+
+
+
+header .caja2 {
+    display: grid; /* Usar CSS Grid para el header */
+    grid-template-columns: 1fr 2fr 1fr; /* Tres columnas */
+    align-items: center; /* Centrar elementos verticalmente */
+    width: 100%; /* Ancho completo */
+    grid-area: header; /* Asignar área de grid */
+}
+
+.logo-name {
+    display: flex; /* Usar Flexbox */
+    justify-content: flex-start; /* Alinear elementos a la izquierda */
+    align-items: center; /* Centrar elementos verticalmente */
+    gap: 10px; /* Espacio entre elementos */
+    margin: 7px;
+}
+
+nav {
+    display: flex; /* Usar Flexbox */
+    justify-content: center; /* Centrar el menú horizontalmente */
+}
+
+.menu-horizontal {
+    list-style: none; /* Quitar viñetas de lista */
+    display: flex; /* Usar Flexbox */
+    justify-content: space-around; /* Espacio uniforme entre elementos */
+    width: 100%; /* Ancho completo */
+}
+
+.menu-horizontal li a {
+    display: block; /* Mostrar como bloque */
+    padding: 15px 20px; /* Padding interno */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Quitar subrayado */
+}
+
+.menu-horizontal li:hover {
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,65,144,1) 35%, rgba(13,105,214,1) 100%); /* Gradiente de fondo al pasar el ratón */
+}
+
+.menu-vertical {
+    position: absolute; /* Posicionamiento absoluto */
+    display: none; /* Ocultar por defecto */
+    list-style: none; /* Quitar viñetas */
+    background-color: #090f46cc; /* Fondo semitransparente */
+    width: 200px; /* Ancho fijo */
+    z-index: 2;
+}
+
+.menu-horizontal li:hover .menu-vertical {
+    display: block; /* Mostrar submenú al pasar el ratón */
+}
+
+.menu-vertical li:hover {
+    background: linear-gradient(90deg, #020024 0%, #0e4190 35%, #0d69d6 100%); /* Gradiente de fondo al pasar el ratón */
+}
+
+.menu-vertical li a {
+    display: block; /* Mostrar como bloque */
+    color: white; /* Color del texto */
+    padding: 15px 20px; /* Padding interno */
+    text-decoration: none; /* Quitar subrayado */
+}
+
+.login-home {
+    display: flex; /* Usar Flexbox */
+    justify-content: flex-end; /* Alinear a la derecha */
+}
+
+.btn {
+    padding: 10px 20px; /* Padding interno */
+    background-image: linear-gradient(90deg, #0d69d6 0%, #0e4190 35%, #020024 100%);
+    color: white; /* Color del texto */
+    text-decoration: none; /* Quitar subrayado */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+                                                                MAIN
+        -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+.caja2 {
+    grid-area: header; /* Asignar área de grid */
+    background-color: rgb(255, 255, 255); /* Fondo transparente */
+    flex-direction: column;
+
+
+}
+
+p a {
+    display: inline;
+}
+
+li {
+list-style-type: none;
+}
+
+.carrousel{
+    width: 100%;
+    max-width: 200em;
+    background-color: #ececec;
+    color: #393939;
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+.carrousel .grande{
+    width: 200%;
+    background-color: #ececec;
+    
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3.75em;
+
+    color: #393939;
+    transition: all 0.4s ease;
+    border-radius: 1em;
+    padding: 2em;
+    transition: all 0.5s ease;
+    box-shadow: 1em 1em 2em #c9c9c9, -1em -1em 2em #ffffff, inset 0 0 0 transparent, inset 0 0 0 transparent;
+    transform: translateX(0%);
+}
+
+.carrousel .img{
+    width: calc(100% / 2 - 2em);
+    min-height: 10vh;
+    color: #393939;
+    transition: all 0.4s ease;
+    border-radius: 1em;
+    box-shadow: 1em 1em 2em #c9c9c9, -1em -1em 2em #ffffff, inset 0 0 0 transparent, inset 0 0 0 transparent;
+    background-color: #ececec;
+    height: 45vh;
+}
+
+.carrousel .puntos{
+    width: 100%;
+    padding: 0.4em;
+    margin: 1em 0 0;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.carrousel .punto{
+    width: 2em;
+    height: 2em;
+    margin: 1em 1em 0;
+    color: #020024;
+    transition: all 0.4s ease;
+    border-radius: 1em;
+    background-color: #fff;
+    box-shadow: 0.6em 0.6em 1.2em #c9c9c9, -0.6em -0.6em 1.2em #ffffff, inset 0 0 0 transparent, inset 0 0 0 transparent;
+}
+
+.carrousel .punto.activo{
+    background-color: #c9c9c9;
+}
+
+.relleno{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3.75em;
+    padding: 2em;
+}
+
+.relleno .productos img{
+    width: 20em;
+    height: 15em;
+}
+
+.cotizaciones{
+    margin-bottom: -2em;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
+                                                                FOOTER
+        -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+.caja3 {
+    grid-area: footer; /* Asignar área de grid */
+    background-color: transparent; /* Fondo transparente */
+    padding: 10px; /* Padding interno */
+    display: flex; /* Usar Flexbox */
+    flex-direction: column; /* Columna de elementos */
+}
+
+.items{
+    display: flex; /* Usar Flexbox */
+    flex-direction: column; /* Columna de elementos */
+     align-items: center; /*Centrar elementos */
+    gap: 50px; /* Espacio entre elementos */
+}
+
+.columna{
+    display: flex; /* Usar Flexbox */
+    flex-direction: row; /* Columna de elementos */
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.contacto-formal{
+    display: flex; /* Usar Flexbox */
+    flex-direction: row; /* Columna de elementos */
+    align-items: center; /* Centrar elementos */
+    gap: 60px; /* Espacio entre elementos */
+}
+
+.contacto-formal a{
+    font-size: 1em;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.contacto-formal a:hover {
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,65,144,1) 35%, rgba(13,105,214,1) 100%); /* Gradiente de fondo al pasar el ratón */
+}
+
+#numero-atenc{
+    font-size: 2em;
+}
+
+.copy p{
+    margin: 2em;
+}
+
+.copy p a{
+    text-decoration: none;
+    margin: 2em;
+}
+
+.icons{
+    display: flex; /* Usar Flexbox */
+    flex-direction: row; /* Columna de elementos */
+    align-items: center; /* Centrar elementos */
+    gap: 10px; /* Espacio entre elementos */
+}
+
+.icons a img{
+    width: 2em;
+    height: 2em;
+}

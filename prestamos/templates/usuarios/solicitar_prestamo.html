@@ -1,21 +1,33 @@
 {% extends "usuarios/base_usuarios.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #430c87 0%, #3d1d95 35%, #00d4ff 100%);
+            height: 100vh; /* Asegura que ocupe toda la pantalla */
+            margin: 0; /* Elimina márgenes */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+{% endblock %}
 {% block titulo %} Login {% endblock %}
 
 {% block contenido %} 
 
-
-<div class="card">
-    <div class="card-header">Solicitud de Prestamo</div>
-    <div class="card-body">
-        <h4 class="card-title">Datos</h4>
-
-        {% include "usuarios/form_prestamo.html"  %} 
-
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
+        <div class="card-header text-center fs-2">Solicitud de Préstamo</div>
+        <div class="card-body">
+            <h4 class="card-title text-center">Rellenar el formulario</h4>
+            <div class="d-flex justify-content-center">
+                {% include "usuarios/form_prestamo.html"  %} 
+            </div>
+        </div>
+        <div class="card-footer text-muted text-center"></div>
     </div>
-    <div class="card-footer text-muted"></div>
 </div>
 
- 
 {% endblock %}

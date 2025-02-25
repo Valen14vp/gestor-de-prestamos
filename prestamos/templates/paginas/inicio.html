@@ -1,18 +1,98 @@
 {% extends "base.html" %}
+{% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'prestamos/css/estilos.css' %}">
+{% endblock %}
 {% block titulo %}Inicio{% endblock %}
 
 {% block contenido %} 
 
-<div class="p-5 bg-light">
-    <div class="container">
-        <h1 class="display-3">¡Bienvenidos a PréstamoClick! Tu solución rápida y confiable para gestionar préstamos online.</h1>
-        <p class="lead">registrate / inicia sesion para gestionar tus prestamos</p>
-        <hr class="my-2">
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="{% url 'registro' %}" role="button"> Empezar</a>
-        </p>
+<div class="grid-layout"> 
+    <div class="caja2">
+        <main>
+            <div class="carrousel">
+                <div class="grande">
+                    <img src="{% static 'prestamos/imagenes/SlideHome_Bajamostasas__.png' %}" alt="Imagen 1" class="img">
+                    <img src="{% static 'prestamos/imagenes/Pmo7millones_SlideHome_1 1.png' %}" alt="Imagen 2" class="img">
+                </div>
+                <ul class="puntos">
+                    <li class="punto activo"></li>
+                    <li class="punto"></li>
+                </ul>
+            </div>
+            <div class="relleno">
+                <div class="productos">
+                    <img src="{% static 'prestamos/imagenes/MastercardDebitoRotativo.png' %}" alt="">
+                </div>
+                <div class="productos">
+                    <img src="{% static 'prestamos/imagenes/TiendaBNA_Rotativo.png' %}" alt="">
+                </div>
+                <div class="productos">
+                    <img src="{% static 'prestamos/imagenes/MastercardDebitoRotativo.png' %}" alt="">
+                </div>
+            </div>
+            <div class="cotizaciones">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://es.tradingview.com/" rel="noopener nofollow" target="_blank"></a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                    {
+                    "symbols": [
+                    { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500 Index" },
+                    { "proName": "FOREXCOM:NSXUSD", "title": "US 100 Cash CFD" },
+                    { "proName": "FX_IDC:EURUSD", "title": "EUR to USD" },
+                    { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
+                    { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" }
+                    ],
+                    "showSymbolLogo": true,
+                    "isTransparent": false,
+                    "displayMode": "adaptive",
+                    "colorTheme": "dark",
+                    "locale": "es"
+                }
+                    </script>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="caja3">
+        <footer>
+            <div class="items">
+                <div class="columna">
+                    <div class="contacto-formal">
+                        <a href="mailto:aaaaa@bbb.ccc" class="text-light">Correo electrónico</a> 
+                        <a href="tel:+123456789" class="text-light">Telefóno</a>
+                        <a href="#" target="_blank" class="text-light">Sucursal</a>
+                        <p>Centro de Atención al Cliente <br> <span id="numero-atenc">0800-222-1111</span></p>
+                    </div>
+                </div>   
+                <div class="copy">
+                    <p>Copyright &copy; 2024 <a href="#" class="text-light">Terminos y condiciones</a> <a href="#" class="text-light">Version nocturna</a> <a href="#" class="text-light">Version inglés</a></p>
+                </div>
+            </div>
+        </footer>
     </div>
 </div>
+<script>
+    'use strict';
+const grande = document.querySelector('.grande');
+const puntos = document.querySelectorAll('.punto');
+
+puntos.forEach((punto, i) => {
+    punto.addEventListener('click', () => {
+        let posicion = i;
+        let operacion = posicion * -50;
+        grande.style.transform = `translateX(${operacion}%)`; 
+
+      
+        puntos.forEach(p => p.classList.remove('activo'));
+
+   
+        punto.classList.add('activo');
+    });
+});
+
+</script>
  
 {% endblock %}

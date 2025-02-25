@@ -144,11 +144,8 @@ def solicitar_prestamo(request):
 
 
 
-
-
-
 def ajustes(request):
-    return render(request, 'usuarios/ajustes.html')
+    return render(request, "usuarios/ajustes.html")
 
 
 

@@ -17,4 +17,4 @@ class NuevoUsuarioForm(forms.ModelForm):
 class SolicitarPrestamoForm(forms.ModelForm):
     class Meta:
         model = Prestamos
-        fields = ['monto', 'tasa_intereses', 'plazo', 'ingresos_mensuales', 'empleo_actual', 'imagen_recibo', 'imagen_dnifrente', 'imagen_dnireverso', 'terminos_y_condiciones']
+        fields = ['monto', 'plazo', 'ingresos_mensuales', 'empleo_actual', 'imagen_recibo', 'imagen_dnifrente', 'imagen_dnireverso', 'terminos_y_condiciones']

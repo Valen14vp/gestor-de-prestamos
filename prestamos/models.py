@@ -52,7 +52,7 @@ class Clientes(models.Model):
 class Prestamos(models.Model):
     id = models.AutoField(primary_key=True)
     monto = models.DecimalField(max_digits=12, decimal_places=2, null=False, blank=False)
-    tasa_intereses = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
+    tasa_intereses = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False, default=0.0)
     plazo = models.IntegerField(null=False, blank=False)
     fecha_solicitud = models.DateTimeField(null=True, blank=True)
     estado = models.CharField(max_length=20, default="pendiente", null=False, blank=False)

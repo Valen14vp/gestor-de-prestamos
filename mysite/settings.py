@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import re
+
 
 from pathlib import Path
 import pymysql
@@ -28,8 +30,14 @@ SECRET_KEY = 'django-insecure-d_jey341g%(=$5op+hs*#*1jbk4jb3l4jjwr=t7x%@w#j7jlkh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.ngrok-free.app']
+
+# Permitir cualquier subdominio de ngrok
+NGROK_DOMAIN_REGEX = r'.*\.ngrok-free\.app'
+ALLOWED_HOSTS += [NGROK_DOMAIN_REGEX]
+
+CSRF_TRUSTED_ORIGINS = ['https://*.ngrok-free.app']
 
 # Application definition
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 # Create your models here.    
 class Usuarios(models.Model):
@@ -54,7 +55,7 @@ class Prestamos(models.Model):
     monto = models.DecimalField(max_digits=12, decimal_places=2, null=False, blank=False)
     tasa_intereses = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False, default=0.0)
     plazo = models.IntegerField(null=False, blank=False)
-    fecha_solicitud = models.DateTimeField(null=True, blank=True)
+    fecha_solicitud = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     estado = models.CharField(max_length=20, default="pendiente", null=False, blank=False)
     ingresos_mensuales = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=False)
     empleo_actual = models.CharField(max_length=100, null=True, blank=False)

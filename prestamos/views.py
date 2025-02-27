@@ -11,7 +11,7 @@ import string
 import random
 
 
-
+#inicio-------------------------------------------------------------------------------------------------------------
 
 def inicio(request):
     return render(request, 'paginas/inicio.html')
@@ -43,6 +43,12 @@ def nuevo_usuario(request):
     return render(request, 'paginas/nuevo_usuario.html', {'formulario': formulario})
 
 
+
+
+#clientes-------------------------------------------------------------------------------------------------------------
+
+def menu_opciones(request):
+    return render(request, 'clientes/menu_de_opciones.html')
 
 
 
@@ -87,7 +93,7 @@ def eliminar_clientes(request, id):
 
 
 
-#usuarios
+#usuarios----------------------------------------------------------------------------------------------
 def principal(request):
     cliente_id = request.session.get("cliente_id") 
     if not cliente_id:
@@ -127,17 +133,26 @@ def solicitar_prestamo(request):
     if not cliente_id:
         return redirect("login") 
 
+    cliente = Clientes.objects.get(id=cliente_id) 
+
     if request.method == "POST":
         formulario = SolicitarPrestamoForm(request.POST, request.FILES) 
         if formulario.is_valid():  
             prestamo = formulario.save(commit=False)
-            prestamo.cliente = Clientes.objects.get(id=cliente_id)  
+            prestamo.cliente = cliente  
             prestamo.save()  
+            
+            send_mail(
+                'Solicitud de Préstamo NeonBank',
+                f'Hola, {cliente.nombre} ha solicitado un préstamo por un monto de {prestamo.monto} pesos.',
+                'prestamoclick25@gmail.com',  
+                ['valen125125@gmail.com'],  
+                fail_silently=False,
+            )
             return redirect("principal")  
     else:
         formulario = SolicitarPrestamoForm() 
 
-    cliente = Clientes.objects.get(id=cliente_id)
     return render(request, "usuarios/solicitar_prestamo.html", {"formulario": formulario, "cliente": cliente}) 
     
 

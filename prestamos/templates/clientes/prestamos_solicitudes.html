@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #430c87 0%, #3d1d95 35%, #00d4ff 100%);
+        }
+    </style>
+{% endblock %}
+
+{% block titulo %} Lista de Clientes {% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+
+    <div class="card-body">
+        <h4 class="card-title">Prestamos</h4>
+        
+        <!-- Botones de Filtro -->
+        <div class="btn-group mb-3" role="group">
+            <a 
+                href="?filtro=activos" 
+                class="btn btn-primary {% if filtro_actual == 'activos' %}active{% endif %}">
+                Activos
+            </a>
+            <a 
+                href="?filtro=inactivos" 
+                class="btn btn-primary {% if filtro_actual == 'inactivos' %}active{% endif %}">
+                Pendientes
+            </a>
+            <a 
+                href="?filtro=todos" 
+                class="btn btn-primary {% if filtro_actual == 'todos' %}active{% endif %}">
+                Todos
+            </a>
+        </div>
+
+        <!-- Tabla de Clientes -->
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Plazo</th>
+                        <th scope="col">Fecha Solicitud</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prestamo in prestamos %}
+                    <tr>
+                        <td>{{ prestamo.id }}</td>
+                        <td>{{ prestamo.monto }}</td>
+                        <td>{{ prestamo.plazo }}</td>
+                        <td>{{ prestamo.fecha_solicitud }}</td>
+                        <td>{{ prestamo.estado }}</td>  
+                        <td>
+                            <a 
+                                class="btn btn-info" 
+                                href="{% url 'ver_prestamo' prestamo.id %}" 
+                                role="button">
+                                Revisar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-header">
+        <a
+            class="btn btn-danger"
+            href="{% url 'menu_opciones' %}"
+            role="button"
+            >Atras</a
+        >
+    </div>
+</div>
+
+{% endblock %}

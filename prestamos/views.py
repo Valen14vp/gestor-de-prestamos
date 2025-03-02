@@ -92,6 +92,36 @@ def eliminar_clientes(request, id):
 
 
 
+def prestamos_soli(request):
+    filtro = request.GET.get('filtro', 'todos') 
+    if filtro == 'activos':
+        prestamos = Prestamos.objects.filter(estado="aprobado")
+    elif filtro == 'inactivos':
+        prestamos = Prestamos.objects.filter(estado="pendiente")
+    else:
+        prestamos = Prestamos.objects.all()
+
+    return render(request, 'clientes/prestamos_solicitudes.html', {'prestamos': prestamos, 'filtro_actual': filtro})
+    
+    
+    
+
+def ver_prestamo(request, id):
+    prestamo = Prestamos.objects.get(id=id)
+    cliente = prestamo.cliente
+    return render(request, 'clientes/revision.html', {'prestamo': prestamo, 'cliente': cliente})
+
+
+
+
+
+
+
+
+
+
+
+
 
 #usuarios----------------------------------------------------------------------------------------------
 def principal(request):

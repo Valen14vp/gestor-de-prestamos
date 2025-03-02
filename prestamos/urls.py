@@ -20,6 +20,8 @@ urlpatterns = [
     path("solicitar/", views.solicitar_prestamo, name="solicitar"),
     path("ajuste/", views.ajustes, name="ajustes"),
     path("menu_opciones/", views.menu_opciones, name="menu_opciones"),
+    path("prestamos/", views.prestamos_soli, name="prestamos"),
+    path("prestamos/revision/<int:id>/", views.ver_prestamo, name="ver_prestamo"),
 
     
     

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password, make_password
 from .models import Clientes, Prestamos
 from .forms import ClientesForm, NuevoUsuarioForm, SolicitarPrestamoForm
+from django.http import JsonResponse
 import string
 import random
 
@@ -110,6 +111,8 @@ def ver_prestamo(request, id):
     prestamo = Prestamos.objects.get(id=id)
     cliente = prestamo.cliente
     return render(request, 'clientes/revision.html', {'prestamo': prestamo, 'cliente': cliente})
+
+
 
 
 

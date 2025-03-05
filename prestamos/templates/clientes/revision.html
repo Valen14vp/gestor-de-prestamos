@@ -28,15 +28,6 @@
         .imagen-container img:hover {
             transform: scale(1.1);
         }
-        .imagen-container input {
-            width: 80px;
-            text-align: center;
-            border-radius: 5px;
-            border: none;
-            padding: 5px;
-        }
-
-        /* Estilos para el modal */
         .modal {
             display: none;
             position: fixed;
@@ -63,21 +54,21 @@
             color: white;
             cursor: pointer;
         }
+        .mensaje-error {
+            color: red;
+            font-weight: bold;
+        }
+        .mensaje-exito {
+            color: green;
+            font-weight: bold;
+        }
     </style>
 {% endblock %}
 
 {% block titulo %} Detalles del Préstamo {% endblock %}
 
 {% block contenido %}
-
 <div class="container">
-    <h2>Detalles del Préstamo</h2>
-    <p><strong>ID:</strong> {{ prestamo.id }}</p>
-    <p><strong>Monto:</strong> {{ prestamo.monto }}</p>
-    <p><strong>Plazo:</strong> {{ prestamo.plazo }} meses</p>
-    <p><strong>Fecha de Solicitud:</strong> {{ prestamo.fecha_solicitud|date:"d/m/Y H:i" }}</p>
-    <p><strong>Estado:</strong> {{ prestamo.estado }}</p>
-
     <h2>Datos del Cliente</h2>
     <p><strong>ID Cliente:</strong> {{ cliente.id }}</p>
     <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
@@ -85,21 +76,33 @@
     <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
     <p><strong>Identificación:</strong> {{ cliente.identificacion }}</p>
 
-    <h2>Documentación del Préstamo</h2>
+    <h2>Detalles del Préstamo</h2>
+    <p><strong>ID:</strong> {{ prestamo.id }}</p>
+    <p><strong>Monto:</strong> <span id="monto">{{ prestamo.monto }}</span></p>
+    <p><strong>Plazo:</strong> <span id="plazo">{{ prestamo.plazo }}</span> meses</p>
+    <p><strong>Fecha de Solicitud:</strong> {{ prestamo.fecha_solicitud|date:"d/m/Y H:i" }}</p>
+    <p><strong>Estado:</strong> {{ prestamo.estado }}</p>
+    <p><strong>Cuota Estimada:</strong> <span id="cuota-estimada">Calculando...</span></p>
+    <p><strong>Ganancia Total:</strong> <span id="ganancia-total">Calculando...</span></p>
 
+    <h2>Documentación del Préstamo</h2>
     <div class="imagen-container">
         <img src="{{ prestamo.imagen_recibo.url }}" alt="Recibo" onclick="openModal(this)">
-        <input type="number" placeholder="Valor">
+        <p>Neto a cobrar: <input type="number" class="neto-input" placeholder="Valor" oninput="validarNeto(this)"></p>
+        <span class="mensaje-error" style="display: none;">No cumple con los requisitos mínimos</span>
+        <span class="mensaje-exito" style="display: none;">Cumple con los requisitos mínimos</span>
     </div>
-
     <div class="imagen-container">
         <img src="{{ prestamo.imagen_dnifrente.url }}" alt="DNI Frente" onclick="openModal(this)">
-        <input type="number" placeholder="Valor">
+        <p>Neto a cobrar: <input type="number" class="neto-input" placeholder="Valor" oninput="validarNeto(this)"></p>
+        <span class="mensaje-error" style="display: none;">No cumple con los requisitos mínimos</span>
+        <span class="mensaje-exito" style="display: none;">Cumple con los requisitos mínimos</span>
     </div>
-
     <div class="imagen-container">
         <img src="{{ prestamo.imagen_dnireverso.url }}" alt="DNI Reverso" onclick="openModal(this)">
-        <input type="number" placeholder="Valor">
+        <p>Neto a cobrar: <input type="number" class="neto-input" placeholder="Valor" oninput="validarNeto(this)"></p>
+        <span class="mensaje-error" style="display: none;">No cumple con los requisitos mínimos</span>
+        <span class="mensaje-exito" style="display: none;">Cumple con los requisitos mínimos</span>
     </div>
 </div>
 
@@ -108,11 +111,6 @@
     <span class="close" onclick="closeModal()">&times;</span>
     <img id="modalImg">
 </div>
-
-
-
-
-
 
 {% block extra_js %}
 <script>
@@ -126,7 +124,47 @@
     function closeModal() {
         document.getElementById("imageModal").style.display = "none";
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const monto = parseFloat(document.getElementById("monto").textContent) || 0;
+        const plazo = parseInt(document.getElementById("plazo").textContent) || 0;
+        const cuotaEstimada = document.getElementById("cuota-estimada");
+        const gananciaTotal = document.getElementById("ganancia-total");
+
+        const tasaAnual = 50.00;
+        const tasaMensual = Math.pow(1 + tasaAnual / 100, 1 / 12) - 1;
+
+        function calcularCuotaFrances(monto, tasa, meses) {
+            return (monto * tasa) / (1 - Math.pow(1 + tasa, -meses));
+        }
+
+        if (monto > 0 && plazo > 0) {
+            const cuota = calcularCuotaFrances(monto, tasaMensual, plazo);
+            const totalPagado = cuota * plazo;
+            const ganancia = totalPagado - monto;
+            cuotaEstimada.textContent = `$${cuota.toFixed(2)}`;
+            gananciaTotal.textContent = `$${ganancia.toFixed(2)}`;
+        } else {
+            cuotaEstimada.textContent = "No disponible";
+            gananciaTotal.textContent = "No disponible";
+        }
+    });
+
+    function validarNeto(input) {
+        const cuotaMinima = parseFloat(document.getElementById("cuota-estimada").textContent.replace('$', '')) || 0;
+        const valorIngresado = parseFloat(input.value) || 0;
+        const porcentaje = valorIngresado * 0.3;
+        const mensajeError = input.parentElement.nextElementSibling;
+        const mensajeExito = mensajeError.nextElementSibling;
+        
+        if (porcentaje < cuotaMinima) {
+            mensajeError.style.display = "block";
+            mensajeExito.style.display = "none";
+        } else {
+            mensajeError.style.display = "none";
+            mensajeExito.style.display = "block";
+        }
+    }
 </script>
 {% endblock %}
-
 {% endblock %}

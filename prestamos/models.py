@@ -51,12 +51,17 @@ class Clientes(models.Model):
         return fila
 
 class Prestamos(models.Model):
+    ESTADO_CHOICES = [
+        ('Pendiente', 'Pendiente'),
+        ('Aceptado', 'Aceptado'),
+        ('Rechazado', 'Rechazado'),
+    ]
     id = models.AutoField(primary_key=True)
     monto = models.DecimalField(max_digits=12, decimal_places=2, null=False, blank=False)
     tasa_intereses = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False, default=0.0)
     plazo = models.IntegerField(null=False, blank=False)
     fecha_solicitud = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    estado = models.CharField(max_length=20, default="pendiente", null=False, blank=False)
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='Pendiente', null=False, blank=False)
     ingresos_mensuales = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=False)
     empleo_actual = models.CharField(max_length=100, null=True, blank=False)
     imagen_recibo = models.ImageField(upload_to='imagenes/', null=True, blank=False)

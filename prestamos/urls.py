@@ -22,6 +22,8 @@ urlpatterns = [
     path("menu_opciones/", views.menu_opciones, name="menu_opciones"),
     path("prestamos/", views.prestamos_soli, name="prestamos"),
     path("prestamos/revision/<int:id>/", views.ver_prestamo, name="ver_prestamo"),
+    path('prestamos/cambiar_estado/<int:id>/<str:accion>/', views.cambiar_estado_prestamo, name='cambiar_estado_prestamo'),
+    
 
     
     

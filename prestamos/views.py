@@ -96,9 +96,9 @@ def eliminar_clientes(request, id):
 def prestamos_soli(request):
     filtro = request.GET.get('filtro', 'todos') 
     if filtro == 'activos':
-        prestamos = Prestamos.objects.filter(estado="aprobado")
+        prestamos = Prestamos.objects.filter(estado="Aceptado")
     elif filtro == 'inactivos':
-        prestamos = Prestamos.objects.filter(estado="pendiente")
+        prestamos = Prestamos.objects.filter(estado="Pendiente")
     else:
         prestamos = Prestamos.objects.all()
 
@@ -114,7 +114,20 @@ def ver_prestamo(request, id):
 
 
 
+def cambiar_estado_prestamo(request, id, accion):
+    try:
+        prestamo = Prestamos.objects.get(id=id)
 
+        if accion == 'aceptar':
+            prestamo.estado = 'Aceptado' 
+        elif accion == 'rechazar':
+            prestamo.estado = 'Rechazado'  
+        
+        prestamo.save()  
+
+        return redirect('ver_prestamo', id=prestamo.id)  
+    except Prestamos.DoesNotExist:
+        return render(request, 'error.html', {'mensaje': 'Préstamo no encontrado'})
 
 
 

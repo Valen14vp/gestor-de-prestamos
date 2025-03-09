@@ -117,9 +117,17 @@ def ver_prestamo(request, id):
 def cambiar_estado_prestamo(request, id, accion):
     try:
         prestamo = Prestamos.objects.get(id=id)
+        cliente = prestamo.cliente
 
         if accion == 'aceptar':
             prestamo.estado = 'Aceptado' 
+            send_mail(
+                'Solicitud de Préstamo NeonBank',
+                f'Hola, {cliente.nombre} tu solicitud de préstamo ha sido aprobada.',
+                'prestamoclick25@gmail.com',  
+                [cliente.email],  
+                fail_silently=False,
+            )
         elif accion == 'rechazar':
             prestamo.estado = 'Rechazado'  
         
